@@ -31,6 +31,12 @@ public class Plant {
 //    endregion
 
 //    region methods
+
+    public String getWateringInfo(){
+        LocalDate nextWatering = lastWatering.plusDays(frequencyOfWatering);
+        return "Název: "+name+", Poslední zálivka: "+lastWatering+", Příští zálivka: "+nextWatering+".";
+    }
+
 //    endregion
 
 // region get/set
