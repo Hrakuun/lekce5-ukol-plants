@@ -12,29 +12,31 @@ public class Plant {
     private LocalDate lastWatering;
     private int frequencyOfWatering;
 
-//    endregion
+    //    endregion
 //    region constructors
-    public Plant(String name, String notes, LocalDate plantedOn, LocalDate lastWatering, int frequencyOfWatering){
+    public Plant(String name, String notes, LocalDate plantedOn, LocalDate lastWatering, int frequencyOfWatering) throws PlantException {
         this.name = name;
         this.notes = notes;
         this.plantedOn = plantedOn;
-        this.lastWatering = lastWatering;
+        setLastWatering(lastWatering);
         setFrequencyOfWatering(frequencyOfWatering);
     }
-    public Plant(String name, LocalDate plantedOn, int frequencyOfWatering){
-        this(name,"",plantedOn,LocalDate.now(),frequencyOfWatering);
+
+    public Plant(String name, LocalDate plantedOn, int frequencyOfWatering) throws PlantException {
+        this(name, "", plantedOn, LocalDate.now(), frequencyOfWatering);
     }
-    public Plant(String name){
-        this(name,LocalDate.now(),7);
+
+    public Plant(String name) throws PlantException {
+        this(name, LocalDate.now(), 7);
     }
 
 //    endregion
 
 //    region methods
 
-    public String getWateringInfo(){
+    public String getWateringInfo() {
         LocalDate nextWatering = lastWatering.plusDays(frequencyOfWatering);
-        return "Název: "+name+", Poslední zálivka: "+lastWatering+", Příští zálivka: "+nextWatering+".";
+        return "Název: " + name + ", Poslední zálivka: " + lastWatering + ", Příští zálivka: " + nextWatering + ".";
     }
 
 //    endregion
@@ -69,7 +71,10 @@ public class Plant {
         return lastWatering;
     }
 
-    public void setLastWatering(LocalDate lastWatering) {
+    public void setLastWatering(LocalDate lastWatering) throws PlantException {
+        if(lastWatering.isBefore(plantedOn)){
+            throw new PlantException("Date of last watering cannot be before date of planting!");
+        }
         this.lastWatering = lastWatering;
     }
 
@@ -77,7 +82,10 @@ public class Plant {
         return frequencyOfWatering;
     }
 
-    public void setFrequencyOfWatering(int frequencyOfWatering) {
+    public void setFrequencyOfWatering(int frequencyOfWatering) throws PlantException {
+        if (frequencyOfWatering <= 0) {
+            throw new PlantException("Frequency of watering must be higher than 0!");
+        }
         this.frequencyOfWatering = frequencyOfWatering;
     }
 
