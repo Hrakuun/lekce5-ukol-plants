@@ -77,4 +77,8 @@ public class ListOfPlants {
     }
 
 //    endregion
+
+    public List<Plant> getPlants() {
+        return new ArrayList<>(plants);
+    }
 }
