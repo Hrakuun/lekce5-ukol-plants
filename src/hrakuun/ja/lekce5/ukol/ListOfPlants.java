@@ -1,7 +1,11 @@
 package hrakuun.ja.lekce5.ukol;
 
+import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ListOfPlants {
     // region variables
@@ -20,6 +24,36 @@ public class ListOfPlants {
 
     public void removePlant(Plant plant) {
         plants.remove(plant);
+    }
+
+//    endregion
+//    region file handling
+
+    public void loadPlantsFromFile(String fileName) throws PlantException {
+        int lineCounter = 0;
+        try(Scanner scanner = new Scanner(new BufferedReader(new FileReader(fileName)))){
+            while(scanner.hasNextLine()) {
+                lineCounter++;
+                String line = scanner.nextLine();
+                String[] parts = line.split(Settings.getDelimiter());
+                if(parts.length != 5) {
+                    throw new PlantException("Nesprávný počet parametrů na řádku č."+lineCounter+": "+line+"!");
+                }
+                String name = parts[0];
+                String note = parts[1];
+                int frequencyOfWatering = Integer.parseInt(parts[2]);
+                LocalDate lastWatering = LocalDate.parse(parts[3]);
+                LocalDate plantedOn = LocalDate.parse(parts[4]);
+                Plant plant = new Plant(name, note, plantedOn,lastWatering,frequencyOfWatering);
+                plants.add(plant);
+            }
+        } catch (FileNotFoundException e) {
+            throw new PlantException("Soubor "+fileName+" nebyl nalezen!\n"+ e.getLocalizedMessage());
+        } catch (NumberFormatException e) {
+            throw new PlantException("Frekvence zálevání musí být zapsána v celých číslech! Chyba na řádku číslo: "+lineCounter+"\n"+ e.getLocalizedMessage());
+        } catch (DateTimeParseException e) {
+            throw new PlantException("Data uvedena v neplatném formátu. Vyžadován formát YYYY-MM-DD! Chyba na řádku číslo: "+lineCounter+"\n"+ e.getLocalizedMessage());
+        }
     }
 
 //    endregion
