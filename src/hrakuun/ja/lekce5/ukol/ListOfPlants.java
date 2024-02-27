@@ -57,7 +57,6 @@ public class ListOfPlants {
     }
 
     public void saveListToFile(String fileName) throws PlantException {
-        String newFileName = "new_".concat(fileName);
         String delimiter = Settings.getDelimiter();
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName)))) {
             for (Plant plant : plants) {
