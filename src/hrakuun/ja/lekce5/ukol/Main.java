@@ -8,11 +8,17 @@ public class Main {
         try {
             listOfPlants1.loadPlantsFromFile(Settings.getFilename());
         } catch (PlantException e) {
-            System.err.println("Nepodařilo se načíst obsah košíku ze souboru:" +Settings.getFilename()+":\n"+e.getLocalizedMessage());
+            System.err.println("Nepodařilo se načíst obsah košíku ze souboru:" + Settings.getFilename() + ":\n" + e.getLocalizedMessage());
         }
 
         for (Plant plant : listOfPlants1.getPlants()) {
-            System.out.println(plant);
+            System.out.println(plant.getWateringInfo());
+        }
+
+        try {
+            listOfPlants1.saveListToFile(Settings.getNewfilename());
+        } catch (PlantException e) {
+            System.err.println("Nepodařilo se uložit obsah seznamu do souboru.");
         }
 
     }
