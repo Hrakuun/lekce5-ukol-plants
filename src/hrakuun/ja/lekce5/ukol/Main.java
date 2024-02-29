@@ -9,11 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         ListOfPlants listOfPlants1 = new ListOfPlants();
-        try {
-            listOfPlants1.loadPlantsFromFile(Settings.getFilename());
-        } catch (PlantException e) {
-            System.err.println("Nepodařilo se načíst obsah košíku ze souboru:" + Settings.getFilename() + ":\n" + e.getLocalizedMessage());
-        }
+        loadDataFromFile(Settings.getFilename(), listOfPlants1);
 
         for (Plant plant : listOfPlants1.getPlants()) {
             System.out.println(plant.getWateringInfo());
@@ -26,6 +22,7 @@ public class Main {
         }
         System.out.println();
 
+        System.out.println("Seřazeno dle jména:");
         List<Plant> plantsSortedByName = new ArrayList<>(listOfPlants1.getPlants());
         Collections.sort(plantsSortedByName);
         for (Plant plant : plantsSortedByName) {
@@ -33,12 +30,29 @@ public class Main {
         }
         System.out.println();
 
+        System.out.println("Seřazeno dle poslední zálivky:");
         List<Plant> plantsSortedByWatering = new ArrayList<>(listOfPlants1.getPlants());
         plantsSortedByWatering.sort(new PlantWateringComparator());
         for (Plant plant : plantsSortedByWatering) {
             System.out.println(plant.getName());
         }
         System.out.println();
+
+        // načtení vadných vstupních dat ze souboru data/kvetiny-spatne-datum.txt
+        loadDataFromFile(Settings.getWrongFilename(), listOfPlants1);
+        System.out.println();
+
+        // načtení vadných vstupních dat ze souboru  data/kvetiny-spatne-frekvence.txt
+        loadDataFromFile(Settings.getWrongFilename2(),listOfPlants1);
+
+    }
+
+    public static void loadDataFromFile(String fileName, ListOfPlants listOfPlants) {
+        try {
+            listOfPlants.loadPlantsFromFile(fileName);
+        } catch (PlantException e) {
+            System.err.println("Nepodařilo se načíst obsah košíku ze souboru:" + fileName + ":\n" + e.getLocalizedMessage());
+        }
 
     }
 
