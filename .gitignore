@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .idea/
 lekce5-ukol-plants.iml
+/data/new_kvetiny.txt
 
 ### Eclipse ###
 .apt_generated
@@ -30,3 +31,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 /.idea/
+
