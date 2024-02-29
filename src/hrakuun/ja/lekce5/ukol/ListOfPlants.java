@@ -52,7 +52,7 @@ public class ListOfPlants {
         } catch (NumberFormatException e) {
             throw new PlantException("Frekvence zálevání musí být zapsána v celých číslech! Chyba na řádku číslo: " + lineCounter + "\n" + e.getLocalizedMessage());
         } catch (DateTimeParseException e) {
-            throw new PlantException("Data uvedena v neplatném formátu. Vyžadován formát YYYY-MM-DD! Chyba na řádku číslo: " + lineCounter + "\n" + e.getLocalizedMessage());
+            throw new PlantException("Data uvedena v neplatném formátu. Vyžadován formát RRRR-MM-DD! Chyba na řádku číslo: " + lineCounter + "\n" + e.getLocalizedMessage());
         }
     }
 
