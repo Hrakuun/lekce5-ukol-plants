@@ -2,7 +2,7 @@ package hrakuun.ja.lekce5.ukol;
 
 import java.time.LocalDate;
 
-public class Plant {
+public class Plant implements Comparable<Plant> {
 
 //    region variables
 
@@ -39,6 +39,11 @@ public class Plant {
         return "Název: " + name + ", Poslední zálivka: " + lastWatering + ", Příští zálivka: " + nextWatering + ".";
     }
 
+    @Override
+    public int compareTo(Plant otherPlant) {
+        return this.name.compareTo(otherPlant.getName());
+    }
+
 //    endregion
 
 // region get/set
@@ -72,7 +77,7 @@ public class Plant {
     }
 
     public void setLastWatering(LocalDate lastWatering) throws PlantException {
-        if(lastWatering.isBefore(plantedOn)){
+        if (lastWatering.isBefore(plantedOn)) {
             throw new PlantException("Date of last watering cannot be before date of planting!");
         }
         this.lastWatering = lastWatering;
@@ -90,4 +95,5 @@ public class Plant {
     }
 
 //    endregion
+
 }
